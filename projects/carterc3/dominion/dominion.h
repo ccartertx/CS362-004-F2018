@@ -129,8 +129,10 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
    1, others to 0 */
    
 /* ASSIGNMENT 2 FUNCTION PROTOTYPES */
-int playAdventurer(struct gameState *state);
-int playSmithy(struct gameState *state, int handPos);
+void playAdventurer(struct gameState *state, int currentPlayer, int *temphand);
+void playSmithy(struct gameState *state, int currentPlayer, int handPos);
+void playCouncilRoom(struct gameState *state, int currentPlayer, int handPos);
+
 
 
 #endif
