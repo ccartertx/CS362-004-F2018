@@ -1235,7 +1235,8 @@ void playAdventurer(struct gameState *state, int currentPlayer, int *temphand)
 {
   int drawntreasure=0;
   int cardDrawn;
-  int z = 0;// this is the counter for the temp hand
+  /* BUG: changed z counter initialized value from 0 to 1 */
+  int z = 1;// this is the counter for the temp hand
 
   while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -1243,7 +1244,7 @@ void playAdventurer(struct gameState *state, int currentPlayer, int *temphand)
 	}
 	drawCard(currentPlayer, state);
 	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+	if (cardDrawn == copper || cardDrawn == sliver || cardDrawn == gold)
 	  drawntreasure++;
 	else{
 	  temphand[z]=cardDrawn;
@@ -1262,7 +1263,8 @@ void playSmithy(struct gameState *state, int currentPlayer, int handPos)
 {
   int i;
   //+3 Cards
-      for (i = 0; i < 3; i++)
+  /* BUG: change loop from i < 3 to i < 2 */
+      for (i = 0; i < 2; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -1312,7 +1314,8 @@ void playFeast(struct gameState *state, int currentPlayer, int *temphand, int ch
       //Update Coins for Buy
       updateCoins(currentPlayer, state, 5);
       x = 1;//Condition to loop on
-      while( x == 1) {//Buy one card
+      /* BUG: change while condition from x==1 to x!=1 */
+      while( x != 1) {//Buy one card
 	if (supplyCount(choice1, state) <= 0){
 	  if (DEBUG)
 	    printf("None of that card left, sorry!\n");
@@ -1359,7 +1362,8 @@ void playVillage(struct gameState *state, int currentPlayer, int handPos)
       drawCard(currentPlayer, state);
 			
       //+2 Actions
-      state->numActions = state->numActions + 2;
+      /* BUG: changed state->numActions + 2 to plus 3 */
+      state->numActions = state->numActions + 3;
 			
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
