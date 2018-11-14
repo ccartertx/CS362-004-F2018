@@ -24,62 +24,36 @@ testAll: dominion.o testSuite.c
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 	
-#Assign 3 makefile additions
-testUpdateCoins: testUpdateCoins.c dominion.o rngs.o
-	gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
+#Assign 4 makefile additions
+
+randomtestAdventurer: randomtestAdventurer.c dominion.o rngs.o
+	gcc -o randomtestAdventurer -g  randomtestAdventurer.c dominion.o rngs.o $(CFLAGS)
 	
-unittest1: unittest1.c dominion.o rngs.o
-	gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+randomtestcard1: randomtestcard1.c dominion.o rngs.o
+	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
 	
-unittest2: unittest2.c dominion.o rngs.o
-	gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CFLAGS)
-	
-unittest3: unittest3.c dominion.o rngs.o
-	gcc -o unittest3 -g  unittest3.c dominion.o rngs.o $(CFLAGS)
-	
-unittest4: unittest4.c dominion.o rngs.o
-	gcc -o unittest4 -g  unittest4.c dominion.o rngs.o $(CFLAGS)
-	
-cardtest1: cardtest1.c dominion.o rngs.o
-	gcc -o cardtest1 -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
-	
-cardtest2: cardtest2.c dominion.o rngs.o
-	gcc -o cardtest2 -g  cardtest2.c dominion.o rngs.o $(CFLAGS)
-	
-cardtest3: cardtest3.c dominion.o rngs.o
-	gcc -o cardtest3 -g  cardtest3.c dominion.o rngs.o $(CFLAGS)
-	
-cardtest4: cardtest4.c dominion.o rngs.o
-	gcc -o cardtest4 -g  cardtest4.c dominion.o rngs.o $(CFLAGS)
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o $(CFLAGS)
 
 runtests: testDrawCard 
-	./testDrawCard &> unittestresult.out
-	gcov dominion.c >> unittestresult.out
-	cat dominion.c.gcov >> unittestresult.out
+	./testDrawCard &> randomtestcard.out
+	gcov dominion.c >> randomtestcard.out
+	cat dominion.c.gcov >> randomtestcard.out
 
-unittestresults.out:
-	make unittest1
-	make unittest2
-	make unittest3
-	make unittest4
-	make cardtest1
-	make cardtest2
-	make cardtest3
-	make cardtest4
-	echo "----------------- TEST RESULTS --------------" >> unittestresults.out
-	make tests >> unittestresults.out
-	echo " --------------- COVERAGE RESULTS -------------------" >> unittestresults.out
-	gcov -f -b dominion.c >> unittestresults.out
+runrandomtestAdventurer: randomtestAdventurer  
+	./randomtestAdventurer >> randomtestAdventurer.out
+	gcov -b dominion.c >> randomtestAdventurer.out
+	cat dominion.c.gcov >> randomtestAdventurer.out   
+	
+runrandomtestcard1: randomtestcard1
+	./randomtestcard1 >> randomtestcard1.out
+	gcov -b dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
 
-tests: 
-	./unittest1
-	./unittest2
-	./unittest3
-	./unittest4
-	./cardtest1
-	./cardtest2
-	./cardtest3
-	./cardtest4
+runrandomtestcard2: randomtestcard2
+	./randomtestcard2 >> randomtestcard2.out
+	gcov -b dominion.c >> randomtestcard2.out
+	cat dominion.c.gcov >> randomtestcard2.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
@@ -88,4 +62,4 @@ all: playdom player
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
-	rm -f unittestresults.out
+	rm -f randomtestcard.out
